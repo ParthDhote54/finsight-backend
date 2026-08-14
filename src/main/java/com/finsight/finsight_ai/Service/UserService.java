@@ -4,6 +4,7 @@ import com.finsight.finsight_ai.dto.AuthResponse;
 import com.finsight.finsight_ai.dto.UserRegisterationRequest;
 import com.finsight.finsight_ai.dto.UserResponse;
 import com.finsight.finsight_ai.entity.User;
+import com.finsight.finsight_ai.exception.InvalidCredentialsException;
 import com.finsight.finsight_ai.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -42,10 +43,10 @@ public class UserService {
     public AuthResponse login(String email, String rawPassword) {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalStateException("Invalid Email or Password"));
+                .orElseThrow(() -> new InvalidCredentialsException("Invalid email or password"));
 
         if(!passwordEncoder.matches(rawPassword, user.getPasswordHash())) {
-            throw new IllegalStateException("Invalid email or password");
+            throw new InvalidCredentialsException("Invalid email or password");
         }
 
 

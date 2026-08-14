@@ -5,7 +5,7 @@ substitutions:
   _DB_NAME: finsight
   _DB_USER: finsight_app
   _CLOUD_SQL_CONNECTION_NAME: finsight-ai-dev:asia-south1:finsight-db
-  _FRONTEND_ORIGIN: http://localhost:5173
+  _FRONTEND_ORIGIN: https://finsight-ai-dev.web.app
 
 steps:
   - name: gcr.io/cloud-builders/docker

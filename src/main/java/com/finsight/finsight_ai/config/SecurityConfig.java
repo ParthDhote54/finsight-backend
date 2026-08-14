@@ -64,7 +64,7 @@ public class SecurityConfig {
                 ? allowedFrontendOrigin
                 : "http://localhost:5173";
 
-        config.setAllowedOrigins(List.of(originPattern, "http://localhost:5173", "http://localhost:4173"));
+        config.setAllowedOrigins(List.of(originPattern, "https://finsight-ai-dev.firebaseapp.com", "http://localhost:5173", "http://localhost:4173"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Requested-With", "Accept"));
         config.setAllowCredentials(true);
