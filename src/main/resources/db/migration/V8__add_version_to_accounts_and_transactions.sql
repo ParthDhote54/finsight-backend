@@ -1,0 +1,5 @@
+ALTER TABLE accounts
+ADD COLUMN version BIGINT DEFAULT 0;
+
+ALTER TABLE transactions
+ADD COLUMN version BIGINT DEFAULT 0;

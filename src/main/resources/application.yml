@@ -1,0 +1,66 @@
+spring:
+  application:
+    name: finsight-ai
+
+  datasource:
+    url: jdbc:postgresql://localhost:5434/finsight
+    username: finsight
+    password: finsight_local_dev
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: Asia/Kolkata
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  # --- VERTEX AI CONFIGURATION ---
+  ai:
+    vertex:
+      ai:
+        # Chat Model (Categorization)
+        gemini:
+          project-id: finsight-ai-dev
+          location: us-central1
+          chat:
+            options:
+              model: gemini-2.5-flash-lite
+              temperature: 0.2
+
+        # Embedding Model (Vector Generation)
+        embedding:
+          project-id: finsight-ai-dev
+          location: us-central1
+          options:
+            model: text-embedding-004
+
+server:
+  port: 8080
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+app:
+  ai:
+    default-category-name: "Other / Miscellaneous"
+  jwt:
+    secret: ${JWT_SECRET:finsight_default_secret_key_for_local_dev_1234567890_min32bytes}
+    access-token-expiration-ms: 900000       # 15 minutes
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    com.finsight: DEBUG

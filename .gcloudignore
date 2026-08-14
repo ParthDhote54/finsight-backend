@@ -1,0 +1,8 @@
+.git
+.idea
+target
+logs
+frontend
+*.log
+*.gz
+docker-compose.yml

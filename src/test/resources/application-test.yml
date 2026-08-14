@@ -1,0 +1,22 @@
+app:
+  jwt:
+    secret: test-only-jwt-secret-that-is-at-least-32-bytes-long
+    access-token-expiration-ms: 60000
+
+debug: false
+
+spring:
+  ai:
+    model:
+      chat: none
+      embedding:
+        text: none
+        multimodal: none
+
+  jpa:
+    show-sql: false
+
+logging:
+  level:
+    org.hibernate.SQL: WARN
+    com.finsight: INFO

@@ -1,0 +1,28 @@
+app:
+  jwt:
+    secret: test-only-jwt-secret-that-is-at-least-32-bytes-long
+    access-token-expiration-ms: 60000
+
+spring:
+  ai:
+    vertex:
+      ai:
+        gemini:
+          project-id: finsight-ai-dev
+          location: us-central1
+          chat:
+            options:
+              model: gemini-2.5-flash-lite
+        embedding:
+          project-id: finsight-ai-dev
+          location: us-central1
+          options:
+            model: text-embedding-004
+
+  jpa:
+    show-sql: false
+
+logging:
+  level:
+    org.hibernate.SQL: WARN
+    com.finsight: INFO

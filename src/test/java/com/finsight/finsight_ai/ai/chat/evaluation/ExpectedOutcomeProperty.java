@@ -1,0 +1,9 @@
+package com.finsight.finsight_ai.ai.chat.evaluation;
+
+public enum ExpectedOutcomeProperty {
+    MODEL_TOOL_SELECTION_EXPECTED,
+    VALIDATOR_BLOCK_EXPECTED,
+    NUMERIC_FAILURE_SAFE_FALLBACK_ACCEPTABLE,
+    CITATION_VALIDATION_APPLICABLE,
+    SEMANTIC_VALIDATION_APPLICABLE
+}

@@ -1,0 +1,5 @@
+ALTER TABLE categories
+ADD COLUMN icon VARCHAR(255),
+ADD COLUMN color VARCHAR(255);
+
+

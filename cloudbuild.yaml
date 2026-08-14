@@ -1,0 +1,43 @@
+substitutions:
+  _REGION: asia-south1
+  _SERVICE: finsight-backend
+  _REPOSITORY: finsight-repo
+  _DB_NAME: finsight
+  _DB_USER: finsight_app
+  _CLOUD_SQL_CONNECTION_NAME: finsight-ai-dev:asia-south1:finsight-db
+  _FRONTEND_ORIGIN: http://localhost:5173
+
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}:$COMMIT_SHA
+      - .
+
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}:$COMMIT_SHA
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_SERVICE}
+      - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}:$COMMIT_SHA
+      - --region=${_REGION}
+      - --platform=managed
+      - --allow-unauthenticated
+      - --memory=512Mi
+      - --cpu=1
+      - --min-instances=0
+      - --max-instances=3
+      - --timeout=60s
+      - --add-cloudsql-instances=${_CLOUD_SQL_CONNECTION_NAME}
+      - --set-env-vars=SPRING_PROFILES_ACTIVE=prod,SPRING_DATASOURCE_USERNAME=${_DB_USER},DB_NAME=${_DB_NAME},CLOUD_SQL_CONNECTION_NAME=${_CLOUD_SQL_CONNECTION_NAME},GCP_PROJECT_ID=$PROJECT_ID,GCP_LOCATION=${_REGION},HIKARI_MAX_POOL_SIZE=3,HIKARI_MIN_IDLE=0,FINSIGHT_FRONTEND_ORIGIN=${_FRONTEND_ORIGIN}
+      - --set-secrets=SPRING_DATASOURCE_PASSWORD=db-password:latest,JWT_SECRET=jwt-secret:latest,GEMINI_API_KEY=gemini-api-key:latest
+
+images:
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_SERVICE}:$COMMIT_SHA
