@@ -12,7 +12,7 @@ RUN ./mvnw -B clean package -DskipTests
 # ============================================================
 # Stage 2: Lean Production Runtime
 # ============================================================
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:21-jre
 WORKDIR /app
 
 RUN addgroup -S finsight && adduser -S finsight -G finsight
