@@ -15,7 +15,7 @@ RUN ./mvnw -B clean package -DskipTests
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 
-RUN addgroup -S finsight && adduser -S finsight -G finsight
+RUN groupadd --system finsight && useradd --system --gid finsight --no-create-home finsight
 USER finsight:finsight
 
 COPY --from=builder /app/target/finsight-ai-0.1.0-M1.jar app.jar
